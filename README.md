@@ -74,11 +74,28 @@ your credentials.
 
 ## Running as a service
 
-`reddit-monitor.service` is a systemd unit for running the bot under your own
-user. Adjust `User`, `WorkingDirectory` and `ExecStart` to your paths, then:
+Drop a systemd unit in `/etc/systemd/system/reddit-monitor.service`, adjusting
+the user and paths to match your install:
+
+```ini
+[Unit]
+Description=Reddit monitor (post alerts + Matrix reaction actions)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=youruser
+WorkingDirectory=/path/to/reddit-monitor
+ExecStart=/path/to/reddit-monitor/reddit-monitor
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
+```
 
 ```sh
-sudo cp reddit-monitor.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now reddit-monitor
 ```

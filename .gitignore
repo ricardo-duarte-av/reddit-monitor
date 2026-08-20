@@ -4,8 +4,9 @@ config.yaml
 # Compiled binary
 reddit-monitor
 
-# Local launcher (machine-specific paths)
+# Machine-specific launcher and systemd unit
 start.sh
+reddit-monitor.service
 
 # Runtime state
 *.db
