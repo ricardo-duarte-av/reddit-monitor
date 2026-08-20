@@ -1,0 +1,25 @@
+reddit:
+  client_id: "YOUR_REDDIT_APP_CLIENT_ID"
+  client_secret: "YOUR_REDDIT_APP_CLIENT_SECRET"
+  username: "your_reddit_username"       # must be a moderator of the subreddit
+  password: "your_reddit_password"
+
+openai:
+  api_key: "sk-YOUR_OPENAI_API_KEY"
+
+matrix:
+  server: "https://matrix.org"
+  user: "botuser"                        # localpart; the full MXID is resolved via whoami
+  password: "unused_when_token_is_set"
+  token: "YOUR_MATRIX_ACCESS_TOKEN"
+  room_id: "!example:matrix.org"         # room the alerts are posted to
+
+bot:
+  subreddit: "yoursubreddit"
+  poll_interval: "2m"                    # optional, Go duration; defaults to 2m
+  prompt: |
+    Analyze this text: "%s". Is the user asking for ROMs or download links?
+    If positive, answer only with 'true' and if negative answer only with 'false'.
+
+sqlite:
+  db_path: "processed_posts.db"

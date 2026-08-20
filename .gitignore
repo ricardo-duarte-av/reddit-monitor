@@ -1,0 +1,19 @@
+# Local configuration — holds Reddit / OpenAI / Matrix credentials
+config.yaml
+
+# Compiled binary
+reddit-monitor
+
+# Local launcher (machine-specific paths)
+start.sh
+
+# Runtime state
+*.db
+*.db-shm
+*.db-wal
+
+# Claude Code local settings
+.claude/
+
+# Old single-threaded prototype kept locally
+.reddit-monitor-in-series.go
