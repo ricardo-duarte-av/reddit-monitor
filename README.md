@@ -8,7 +8,7 @@ room. Moderators act on the alert by reacting to it: 🔒 locks the Reddit threa
 ## How it works
 
 ```
-Reddit /new  ──poll──▶  OpenAI (o4-mini)  ──true?──▶  Matrix alert + 🔒 💣 buttons
+Reddit /new  ──poll──▶  OpenAI (gpt-5-mini)  ──true?──▶  Matrix alert + 🔒 💣 buttons
                                                               │
                                        moderator reacts ──────┤
                                                               ▼

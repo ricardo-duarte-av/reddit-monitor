@@ -249,7 +249,7 @@ func ReleaseAction(db *sql.DB, eventID, action string) error {
 	return nil
 }
 
-// AnalyzeText sends a Reddit post's title and body to OpenAI for analysis using the o4-mini model
+// AnalyzeText sends a Reddit post's title and body to OpenAI for analysis using the gpt-5-mini model
 func AnalyzeText(apiKey, prompt, postTitle, postBody string) (bool, error) {
 	client := openai.NewClient(apiKey)
 
@@ -260,7 +260,7 @@ func AnalyzeText(apiKey, prompt, postTitle, postBody string) (bool, error) {
 	log.Println("Sending text to OpenAI for analysis...")
 
 	resp, err := client.CreateChatCompletion(context.Background(), openai.ChatCompletionRequest{
-		Model: "o4-mini",
+		Model: "gpt-5-mini",
 		Messages: []openai.ChatCompletionMessage{
 			{
 				Role:    openai.ChatMessageRoleSystem,
@@ -271,7 +271,10 @@ func AnalyzeText(apiKey, prompt, postTitle, postBody string) (bool, error) {
 				Content: fullPrompt,
 			},
 		},
-		MaxCompletionTokens: 500,
+		// Reasoning tokens count toward this limit; keep effort low so the
+		// one-word answer isn't starved out.
+		ReasoningEffort:     "low",
+		MaxCompletionTokens: 2000,
 	})
 	if err != nil {
 		return false, fmt.Errorf("OpenAI API error: %v", err)
@@ -284,7 +287,7 @@ func AnalyzeText(apiKey, prompt, postTitle, postBody string) (bool, error) {
 
 	responseText := resp.Choices[0].Message.Content
 	log.Printf("OpenAI parsed response: %s\n", responseText)
-	return responseText == "true", nil
+	return strings.EqualFold(strings.TrimSpace(responseText), "true"), nil
 }
 
 // FormatMatrixMessage generates a Matrix message with Reddit post details, including the body
